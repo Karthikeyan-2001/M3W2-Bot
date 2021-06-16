@@ -109,34 +109,28 @@ async def vteam(ctx,notm):
         await c.delete()
 
 
+  memid= voice_channel.voice_states.keys()
+  memlist=list(memid)
 
-
-
-#Voice team maker
-@client.command()
-#@commands.has_role('M3W2')
-async def cvteam(ctx):
-  chan1 = ctx.author.voice
-  if chan1==None:
-    await ctx.send("PLEASE JOIN A CHANNEL AND ENTER COMMAND..!")
+  if a not in memlist:
+    await ctx.send('Join M3W2 Lobby channel and resend the command..!')
     return
-  memlist=list()
-  channel = ctx.author.voice.channel
-  for c in ctx.guild.voice_channels:
-    if str(c).startswith('M3W2 Team - '):
-      memid = c.voice_states.keys()
-      memlist=list(memid)
-      if len(memlist) == 0:
-        await c.delete()
-
-
-
   
-
-
-
-
-
+  if notm>len(memlist):
+    await ctx.send('Specify No. of teams less than members..!')
+    return
+  
+  random.shuffle(memlist)
+  memlist= np.array_split(memlist, notm)
+  await ctx.send(type(int(memlist[0][0])))
+  for i in range(0,notm):
+    chanT = 'M3W2 Team - '+str(i+1)
+    chn = await ctx.guild.create_voice_channel(chanT, category=cat, user_limit=memlist[i].size)
+    await ctx.send(chn)
+    ids=memlist[i]
+    for j in range(0,len(ids)):
+      user = await ctx.guild.query_members(user_ids=int(ids[j]))
+      await user[0].move_to(chn)
 
 
 #Voice team deleter
@@ -158,6 +152,11 @@ async def over(ctx):
       await c.delete()
 
 
+#Voice team deleter
+@client.command()
+#@commands.has_role('RoleName')
+async def over(ctx):
+
 
 #For ping
 @client.command()
@@ -165,8 +164,8 @@ async def ping(ctx):
   await ctx.send(f'{round(client.latency*1000)} ms')
 
 #Help Embed
-@client.command(aliases=['help','HELP','Help-1'])
-async def embedhelp(ctx):
+@client.command(aliases=['Help','help','HELP'])
+async def embed(ctx):
 
   with open('prefixes.json','r') as f:
     prefixes=json.load(f)
@@ -182,88 +181,13 @@ async def embedhelp(ctx):
 
   embed.set_thumbnail(url=gif)
 
-  embed.add_field(name=f"{a}help", value="Display all commands of this bot and it's uses", inline=True) 
-
+  embed.add_field(name=f"{a}Help", value="Display all commands of this bot and it's uses", inline=False) 
   embed.add_field(name=f"{a}ping", value="Returns Ping of this bot", inline=True)
-
   embed.add_field(name=f"{a}changeprefix", value=f"Used to change prefix.\n Syntax: {a}changeprefix [your desired prefix]", inline=False)
 
-  embed.add_field(name=f"{a}Help-2 or {a}help vteam", value=f"Information about {a}vteam command", inline=True)
-
-  embed.add_field(name=f"{a}Help-3 or {a}help over", value=f"Information about {a}over command", inline=True)
-
-  embed.set_footer(text="\nThanks for using my Bot <3 \n Page-1/3")
+  embed.set_footer(text="Thanks for using my Bot <3")
 
   await ctx.send(embed=embed)
 
 
-#Help Embed Vteam
-@client.command(aliases=['Help vteam','Help-2'])
-async def vteamembed(ctx):
-
-  with open('prefixes.json','r') as f:
-    prefixes=json.load(f)
-    a = prefixes[str(ctx.guild.id)]
-
-  gif=random.choice(gifs2)
-
-  #### Create the initial embed object ####
-  embed=discord.Embed(title="VOICE TEAMER", description="This command is used for teaming up the members in M3W2 Lobby to desired number of teams randomly.\nThis command create required number of teams and move the members randomly to their respective teams.", color=0x2ecc71)
-
-# Add author, thumbnail, fields, and footer to the embed
-  embed.set_author(name=ctx.author.display_name,  icon_url=ctx.author.avatar_url)
-
-  embed.set_thumbnail(url=gif)
-
-  embed.add_field(name="SYNTAX", value=f"{a}vteam [number of team]", inline=True) 
-
-  embed.add_field(name="EXAMPLE", value=f"If you want two team, syntax is {a}vteam 2 ", inline=True)
-
-  embed.add_field(name="INSTRUCTIONS", value=f"1. Create M3W2 Category and channel, enter command {a}vteam 1 \n2. If this command doesn't summon M3W2 Lobby channel, delete the category and retype the command.\n3. please delete M3W2 Team - x channel if not needed by {a}over command. if the M3W2 Team - x channel exist, delete manually. \n4. Enter number of teams less than or equal to number of members in the M3W2 Lobby channel. \n5. You and all members must be in M3W2 Lobby channel to summon and seperate teams", inline=False)
-
-  embed.add_field(name=f"{a}Help-1 or {a}help", value=f"Information about all commands", inline=False)
-
-  embed.add_field(name=f"{a}Help-3 or {a}Help over", value=f"Information about {a}over command", inline=True)
-
-  embed.set_footer(text="\nThanks for using my Bot <3 \n Page-2/3")
-
-  await ctx.send(embed=embed)
-
-
-#Help Embed
-@client.command(aliases=['Help over','Help-3'])
-async def embedover(ctx):
-
-  with open('prefixes.json','r') as f:
-    prefixes=json.load(f)
-    a = prefixes[str(ctx.guild.id)]
-
-  gif=random.choice(gifs2)
-
-  #### Create the initial embed object ####
-  embed=discord.Embed(title="OVER", description="If you finished the game, use this command to move all the members from all teams to M3W2 Lobby and delete all teams", color=0xf1c40f)
-
-# Add author, thumbnail, fields, and footer to the embed
-  embed.set_author(name=ctx.author.display_name,  icon_url=ctx.author.avatar_url)
-
-  embed.set_thumbnail(url=gif)
-
-  embed.add_field(name="SYNTAX", value=f"{a}over", inline=False) 
-
-  embed.add_field(name="EXAMPLE", value=f"If your game is over and want all members back to lobby, use command {a}over ", inline=False)
-
-  embed.add_field(name=f"{a}Help-1 or {a}help", value=f"Information about all commands", inline=False)
-
-  embed.add_field(name=f"{a}Help-2 or {a}Help vteam", value=f"Information about {a}vteam command", inline=False)
-
-  embed.add_field(name=f"{a}Help-3 or {a}Help over", value=f"Information about {a}over command", inline=False)
-
-  embed.set_footer(text="\nThanks for using my Bot <3 \n Page-3/3")
-
-  await ctx.send(embed=embed)
-
-
-
-
-keep_alive()
 client.run(os.environ['Token'])
