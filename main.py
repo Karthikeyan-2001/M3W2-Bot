@@ -80,6 +80,9 @@ async def changeprefix(ctx, prefix):
 
     await ctx.send(f'prefix changed to {prefix}')
 
+@client.command()
+async def link(ctx):
+  await ctx.send('https://bit.ly/3wyHJ11')
 
 #Voice team maker
 @client.command()
@@ -254,40 +257,36 @@ async def ping(ctx):
     await ctx.send(f'{round(client.latency*1000)} ms')
 
 
-#Help Embed
-@client.command(aliases=['help','HELP', 'Help-1'])
-async def embed(ctx):
 
+
+def embedpg1(ctx):
   with open('prefixes.json','r') as f:
     prefixes=json.load(f)
     a = prefixes[str(ctx.guild.id)]
 
   gif=random.choice(gifs2)
 
-  embed=discord.Embed(title="HELP", description="These are the list of commands used in this bot", color=0xad1457)
+  embed=discord.Embed(title="HELP", description="These are the list of commands used in this bot\n", color=0xad1457)
 # Add author, thumbnail, fields, and footer to the embed
   embed.set_author(name=ctx.author.display_name,  icon_url=ctx.author.avatar_url)
 
   embed.set_thumbnail(url=gif)
   embed.add_field(name=f"{a}Help", value="Display all commands of this bot and it's uses", inline=False) 
   embed.add_field(name=f"{a}ping", value="Returns Ping of this bot", inline=True)
-  embed.add_field(name=f"{a}changeprefix", value=f"Used to change prefix.\n Syntax: {a}changeprefix [your desired prefix]", inline=False)
 
-  embed.add_field(name=f"{a}Help-2 or {a}Helpvteam", value=f"Information about {a}vteam command", inline=True)
+  embed.add_field(name=f"{a}link", value="Generate bot link to join servers..!", inline=True)
 
-  embed.add_field(name=f"{a}Help-3 or {a}Helpover", value=f"Information about {a}over command", inline=True)
+  embed.add_field(name=f"{a}changeprefix", value=f"Used to change prefix.\n Syntax: {a}changeprefix [your desired prefix]\n", inline=False)
+
+  embed.add_field(name="press ▶ for page 2", value=f"Information about {a}vteam command", inline=True)
+
+  embed.add_field(name="press ⏭ for page 3", value=f"Information about {a}over command", inline=True)
 
   embed.set_footer(text="\nThanks for using my Bot <3 \n Page-1/3")
-  await ctx.send(embed=embed)
-
-  
+  return embed
 
 
-
-#Help Embed Vteam
-@client.command(aliases=['Helpvteam','Help-2'])
-async def vteamembed(ctx):
-
+def embedpg2(ctx):
   with open('prefixes.json','r') as f:
     prefixes=json.load(f)
     a = prefixes[str(ctx.guild.id)]
@@ -295,7 +294,7 @@ async def vteamembed(ctx):
   gif=random.choice(gifs2)
 
   #### Create the initial embed object ####
-  embed=discord.Embed(title="VOICE TEAMER", description="This command is used for teaming up the members in M3W2 Lobby to desired number of teams randomly.\n If you want to form team in other voice channel category.. create a role 'M3W2' and assign it. \nThis command create required number of teams and move the members randomly to their respective teams.", color=0x2ecc71)
+  embed=discord.Embed(title="VOICE TEAMER", description="This command is used for teaming up the members in M3W2 Lobby to desired number of teams randomly.\n If you want to form team in other voice channel category.. create a role 'M3W2' and assign it. \nThis command create required number of teams and move the members randomly to their respective teams.\n", color=0x2ecc71)
 
 # Add author, thumbnail, fields, and footer to the embed
   embed.set_author(name=ctx.author.display_name,  icon_url=ctx.author.avatar_url)
@@ -306,24 +305,22 @@ async def vteamembed(ctx):
 
   embed.add_field(name="EXAMPLE", value=f"If you want two team, syntax is {a}vteam 2 ", inline=True)
 
-  embed.add_field(name="INSTRUCTIONS", value=f"1. Create M3W2 Category and channel, enter command {a}vteam 1 \n2. If this command doesn't summon M3W2 Lobby channel, delete the category and retype the command.\n3. please delete M3W2 Team - x channel if not needed by {a}over command. if the M3W2 Team - x channel exist, delete manually. \n4. Enter number of teams less than or equal to number of members in the M3W2 Lobby channel. \n5. You and all members must be in M3W2 Lobby channel to summon and seperate teams", inline=False)
+  embed.add_field(name="INSTRUCTIONS", value=f"1. Create M3W2 Category and channel, enter command {a}vteam 1 \n2. If this command doesn't summon M3W2 Lobby channel, delete the category and retype the command.\n3. please delete M3W2 Team - x channel if not needed by {a}over command. if the M3W2 Team - x channel exist, delete manually. \n4. Enter number of teams less than or equal to number of members in the M3W2 Lobby channel. \n5. You and all members must be in M3W2 Lobby channel to summon and seperate teams\n", inline=False)
 
-  embed.add_field(name="Privilaged M3W2", value=f"If you want to form team other than M3W2 Teams category or M3W2 Lobby, create a role 'M3W2' and assign it to you..!\n This role helps you to form teams from other voice channels and has special {a}over command access to delete the created teams channel", inline=False)
+  embed.add_field(name="Privilaged M3W2", value=f"If you want to form team other than M3W2 Teams category or M3W2 Lobby, create a role 'M3W2' and assign it to you..!\n This role helps you to form teams from other voice channels and has special {a}over command access to delete the created teams channel\n", inline=False)
 
-  embed.add_field(name=f"{a}Help-1 or {a}help", value=f"Information about all commands", inline=False)
+  embed.add_field(name="press ◀ for page 1", value=f"Information about all commands", inline=True)
 
-  embed.add_field(name=f"{a}Help-3 or {a}Helpover", value=f"Information about {a}over command", inline=True)
+  embed.add_field(name="press ▶ for page 3", value=f"Information about {a}over command", inline=True)
 
   embed.set_footer(text="\nThanks for using my Bot <3 \n Page-2/3")
 
-  await ctx.send(embed=embed)
+  return embed
 
 
 
-#Help Embed
-@client.command(aliases=['Helpover','Help-3'])
-async def embedover(ctx):
 
+def embedpg3(ctx):
   with open('prefixes.json','r') as f:
     prefixes=json.load(f)
     a = prefixes[str(ctx.guild.id)]
@@ -331,7 +328,7 @@ async def embedover(ctx):
   gif=random.choice(gifs2)
 
   #### Create the initial embed object ####
-  embed=discord.Embed(title="OVER", description="If you finished the game, use this command to move all the members from all created teams to M3W2 Lobby and delete all teams in that category..!", color=0xf1c40f)
+  embed=discord.Embed(title="OVER", description="If you finished the game, use this command to move all the members from all created teams to M3W2 Lobby and delete all teams in that category..!\n", color=0xf1c40f)
 
 # Add author, thumbnail, fields, and footer to the embed
   embed.set_author(name=ctx.author.display_name,  icon_url=ctx.author.avatar_url)
@@ -342,16 +339,64 @@ async def embedover(ctx):
 
   embed.add_field(name="EXAMPLE", value=f"If your game is over and want all members back to lobby, use command {a}over ", inline=True)
 
-  embed.add_field(name="Special Access..!", value="if you have role 'M3W2', you can delete the created team channel in that category and return to any voice channel in that particular category..!", inline=False)
+  embed.add_field(name="Special Access..!", value="if you have role 'M3W2', you can delete the created team channel in that category and return to any voice channel in that particular category..!\n", inline=False)
 
-  embed.add_field(name=f"{a}Help-1 or {a}help", value=f"Information about all commands", inline=True)
+  embed.add_field(name="press ⏮ for page 1", value=f"Information about all commands", inline=True)
 
-  embed.add_field(name=f"{a}Help-2 or {a}Helpvteam", value=f"Information about {a}vteam command", inline=False)
+  embed.add_field(name="press ◀ for page 2", value=f"Information about {a}vteam command", inline=True)
 
 
   embed.set_footer(text="\nThanks for using my Bot <3 \n Page-3/3")
 
-  await ctx.send(embed=embed)
+  return embed
+
+
+
+@client.command(aliases=['help','HELP','Help'])
+async def embedpages(ctx):
+
+    page1 = embedpg1(ctx)
+    page2 = embedpg2(ctx)
+    page3 = embedpg3(ctx)
+
+    
+    pages = [page1, page2, page3]
+
+    message = await ctx.send(embed = page1)
+    await message.add_reaction('⏮')
+    await message.add_reaction('◀')
+    await message.add_reaction('▶')
+    await message.add_reaction('⏭')
+
+    def check(reaction, user):
+        return user == ctx.author
+
+    i = 0
+    reaction = None
+
+    while True:
+        if str(reaction) == '⏮':
+            i = 0
+            await message.edit(embed = pages[i])
+        elif str(reaction) == '◀':
+            if i > 0:
+                i -= 1
+                await message.edit(embed = pages[i])
+        elif str(reaction) == '▶':
+            if i < 2:
+                i += 1
+                await message.edit(embed = pages[i])
+        elif str(reaction) == '⏭':
+            i = 2
+            await message.edit(embed = pages[i])
+        
+        try:
+            reaction, user = await client.wait_for('reaction_add', timeout = 60.0, check = check)
+            await message.remove_reaction(reaction, user)
+        except:
+            break
+
+    await message.clear_reactions()
 
 
 
