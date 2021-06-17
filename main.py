@@ -37,7 +37,7 @@ async def on_guild_join(guild):
     for channel in guild.text_channels:
         if channel.permissions_for(guild.me).send_messages:
             await channel.send(
-                'Hey..! Thanks for adding me <3 \n Initial prefix is "+", type '
+                'Hey..! Thanks for adding me <3 \n Initial prefix is "+", type +help for more commands..!'
             )
         break
 
@@ -255,42 +255,104 @@ async def ping(ctx):
 
 
 #Help Embed
-@client.command(aliases=['Help', 'help', 'HELP'])
+@client.command(aliases=['help','HELP', 'Help-1'])
 async def embed(ctx):
 
-    with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
-        a = prefixes[str(ctx.guild.id)]
+  with open('prefixes.json','r') as f:
+    prefixes=json.load(f)
+    a = prefixes[str(ctx.guild.id)]
 
-    gif = random.choice(gifs2)
+  gif=random.choice(gifs2)
 
-    #### Create the initial embed object ####
-    embed = discord.Embed(
-        title="HELP",
-        description="These are the list of commands used in this bot",
-        color=0xad1457)
+  embed=discord.Embed(title="HELP", description="These are the list of commands used in this bot", color=0xad1457)
+# Add author, thumbnail, fields, and footer to the embed
+  embed.set_author(name=ctx.author.display_name,  icon_url=ctx.author.avatar_url)
 
-    # Add author, thumbnail, fields, and footer to the embed
-    embed.set_author(name=ctx.author.display_name,
-                     icon_url=ctx.author.avatar_url)
+  embed.set_thumbnail(url=gif)
+  embed.add_field(name=f"{a}Help", value="Display all commands of this bot and it's uses", inline=False) 
+  embed.add_field(name=f"{a}ping", value="Returns Ping of this bot", inline=True)
+  embed.add_field(name=f"{a}changeprefix", value=f"Used to change prefix.\n Syntax: {a}changeprefix [your desired prefix]", inline=False)
 
-    embed.set_thumbnail(url=gif)
+  embed.add_field(name=f"{a}Help-2 or {a}Helpvteam", value=f"Information about {a}vteam command", inline=True)
 
-    embed.add_field(name=f"{a}Help",
-                    value="Display all commands of this bot and it's uses",
-                    inline=False)
-    embed.add_field(name=f"{a}ping",
-                    value="Returns Ping of this bot",
-                    inline=True)
-    embed.add_field(
-        name=f"{a}changeprefix",
-        value=
-        f"Used to change prefix.\n Syntax: {a}changeprefix [your desired prefix]",
-        inline=False)
+  embed.add_field(name=f"{a}Help-3 or {a}Helpover", value=f"Information about {a}over command", inline=True)
 
-    embed.set_footer(text="Thanks for using my Bot <3")
+  embed.set_footer(text="\nThanks for using my Bot <3 \n Page-1/3")
+  await ctx.send(embed=embed)
 
-    await ctx.send(embed=embed)
+  
+
+
+
+#Help Embed Vteam
+@client.command(aliases=['Helpvteam','Help-2'])
+async def vteamembed(ctx):
+
+  with open('prefixes.json','r') as f:
+    prefixes=json.load(f)
+    a = prefixes[str(ctx.guild.id)]
+
+  gif=random.choice(gifs2)
+
+  #### Create the initial embed object ####
+  embed=discord.Embed(title="VOICE TEAMER", description="This command is used for teaming up the members in M3W2 Lobby to desired number of teams randomly.\n If you want to form team in other voice channel category.. create a role 'M3W2' and assign it. \nThis command create required number of teams and move the members randomly to their respective teams.", color=0x2ecc71)
+
+# Add author, thumbnail, fields, and footer to the embed
+  embed.set_author(name=ctx.author.display_name,  icon_url=ctx.author.avatar_url)
+
+  embed.set_thumbnail(url=gif)
+
+  embed.add_field(name="SYNTAX", value=f"{a}vteam [number of team]", inline=True) 
+
+  embed.add_field(name="EXAMPLE", value=f"If you want two team, syntax is {a}vteam 2 ", inline=True)
+
+  embed.add_field(name="INSTRUCTIONS", value=f"1. Create M3W2 Category and channel, enter command {a}vteam 1 \n2. If this command doesn't summon M3W2 Lobby channel, delete the category and retype the command.\n3. please delete M3W2 Team - x channel if not needed by {a}over command. if the M3W2 Team - x channel exist, delete manually. \n4. Enter number of teams less than or equal to number of members in the M3W2 Lobby channel. \n5. You and all members must be in M3W2 Lobby channel to summon and seperate teams", inline=False)
+
+  embed.add_field(name="Privilaged M3W2", value=f"If you want to form team other than M3W2 Teams category or M3W2 Lobby, create a role 'M3W2' and assign it to you..!\n This role helps you to form teams from other voice channels and has special {a}over command access to delete the created teams channel", inline=False)
+
+  embed.add_field(name=f"{a}Help-1 or {a}help", value=f"Information about all commands", inline=False)
+
+  embed.add_field(name=f"{a}Help-3 or {a}Helpover", value=f"Information about {a}over command", inline=True)
+
+  embed.set_footer(text="\nThanks for using my Bot <3 \n Page-2/3")
+
+  await ctx.send(embed=embed)
+
+
+
+#Help Embed
+@client.command(aliases=['Helpover','Help-3'])
+async def embedover(ctx):
+
+  with open('prefixes.json','r') as f:
+    prefixes=json.load(f)
+    a = prefixes[str(ctx.guild.id)]
+
+  gif=random.choice(gifs2)
+
+  #### Create the initial embed object ####
+  embed=discord.Embed(title="OVER", description="If you finished the game, use this command to move all the members from all created teams to M3W2 Lobby and delete all teams in that category..!", color=0xf1c40f)
+
+# Add author, thumbnail, fields, and footer to the embed
+  embed.set_author(name=ctx.author.display_name,  icon_url=ctx.author.avatar_url)
+
+  embed.set_thumbnail(url=gif)
+
+  embed.add_field(name="SYNTAX", value=f"{a}over", inline=True) 
+
+  embed.add_field(name="EXAMPLE", value=f"If your game is over and want all members back to lobby, use command {a}over ", inline=True)
+
+  embed.add_field(name="Special Access..!", value="if you have role 'M3W2', you can delete the created team channel in that category and return to any voice channel in that particular category..!", inline=False)
+
+  embed.add_field(name=f"{a}Help-1 or {a}help", value=f"Information about all commands", inline=True)
+
+  embed.add_field(name=f"{a}Help-2 or {a}Helpvteam", value=f"Information about {a}vteam command", inline=False)
+
+
+  embed.set_footer(text="\nThanks for using my Bot <3 \n Page-3/3")
+
+  await ctx.send(embed=embed)
+
 
 
 keep_alive()
