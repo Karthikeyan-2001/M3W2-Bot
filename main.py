@@ -7,6 +7,7 @@ from discord.ext import commands, tasks
 from keep_alive import keep_alive
 from itertools import cycle
 from gamename import games, gifs2
+from datetime import datetime
 
 
 #Prefix
@@ -250,6 +251,8 @@ async def on_command_error(ctx, error):
     await ctx.send(message, delete_after=5)
     await ctx.message.delete(delay=5)
 
+# def ctime():
+  
 
 #For ping
 @client.command()
@@ -278,11 +281,8 @@ def embedpg1(ctx):
 
   embed.add_field(name=f"{a}changeprefix", value=f"Used to change prefix.\n Syntax: {a}changeprefix [your desired prefix]\n", inline=False)
 
-  embed.add_field(name="press ▶ for page 2", value=f"Information about {a}vteam command", inline=True)
-
-  embed.add_field(name="press ⏭ for page 3", value=f"Information about {a}over command", inline=True)
-
   embed.set_footer(text="\nThanks for using my Bot <3 \n Page-1/3")
+  embed.set_footer(text=f"\n▶️ {a}vteam || {a}over ⏭️ \n Page-1/3")
   return embed
 
 
@@ -294,26 +294,22 @@ def embedpg2(ctx):
   gif=random.choice(gifs2)
 
   #### Create the initial embed object ####
-  embed=discord.Embed(title="VOICE TEAMER", description="This command is used for teaming up the members in M3W2 Lobby to desired number of teams randomly.\n If you want to form team in other voice channel category.. create a role 'M3W2' and assign it. \nThis command create required number of teams and move the members randomly to their respective teams.\n", color=0x2ecc71)
+  embed=discord.Embed(title="VOICE TEAMER", description="This command is used for teaming up the members in M3W2 Lobby to desired number of teams randomly.\n If you want to form team in other voice channel category.. create a role `M3W2` and assign it. \nThis command create required number of teams and move the members randomly to their respective teams.\n", color=0x2ecc71)
 
 # Add author, thumbnail, fields, and footer to the embed
   embed.set_author(name=ctx.author.display_name,  icon_url=ctx.author.avatar_url)
 
   embed.set_thumbnail(url=gif)
 
-  embed.add_field(name="SYNTAX", value=f"{a}vteam [number of team]", inline=True) 
+  embed.add_field(name="SYNTAX", value=f"`{a}vteam <number of team>`", inline=True) 
 
-  embed.add_field(name="EXAMPLE", value=f"If you want two team, syntax is {a}vteam 2 ", inline=True)
+  embed.add_field(name="EXAMPLE", value=f"If you want two team, syntax is `{a}vteam 2` ", inline=True)
 
-  embed.add_field(name="INSTRUCTIONS", value=f"1. Create M3W2 Category and channel, enter command {a}vteam 1 \n2. If this command doesn't summon M3W2 Lobby channel, delete the category and retype the command.\n3. please delete M3W2 Team - x channel if not needed by {a}over command. if the M3W2 Team - x channel exist, delete manually. \n4. Enter number of teams less than or equal to number of members in the M3W2 Lobby channel. \n5. You and all members must be in M3W2 Lobby channel to summon and seperate teams\n", inline=False)
+  embed.add_field(name="INSTRUCTIONS", value=f"1. Create M3W2 Category and channel, enter command `{a}vteam 1` \n2. If this command doesn't summon M3W2 Lobby channel, delete the category and retype the command.\n3. please delete M3W2 Team - x channel if not needed by `{a}over` command. if the M3W2 Team - x channel exist, delete manually. \n4. Enter number of teams less than or equal to number of members in the M3W2 Lobby channel. \n5. You and all members must be in M3W2 Lobby channel to summon and seperate teams\n", inline=False)
 
-  embed.add_field(name="Privilaged M3W2", value=f"If you want to form team other than M3W2 Teams category or M3W2 Lobby, create a role 'M3W2' and assign it to you..!\n This role helps you to form teams from other voice channels and has special {a}over command access to delete the created teams channel\n", inline=False)
+  embed.add_field(name="Privilaged M3W2", value=f"If you want to form team other than M3W2 Teams category or M3W2 Lobby, create a role `M3W2` and assign it to you..!\n This role helps you to form teams from other voice channels and has special {a}over command access to delete the created teams channel\n", inline=False)
 
-  embed.add_field(name="press ◀ for page 1", value=f"Information about all commands", inline=True)
-
-  embed.add_field(name="press ▶ for page 3", value=f"Information about {a}over command", inline=True)
-
-  embed.set_footer(text="\nThanks for using my Bot <3 \n Page-2/3")
+  embed.set_footer(text=f"\n◀️ {a}help || {a}over ▶️ \n Page-2/3")
 
   return embed
 
@@ -335,18 +331,14 @@ def embedpg3(ctx):
 
   embed.set_thumbnail(url=gif)
 
-  embed.add_field(name="SYNTAX", value=f"{a}over", inline=True) 
+  embed.add_field(name="SYNTAX", value=f"`{a}over`", inline=True) 
 
-  embed.add_field(name="EXAMPLE", value=f"If your game is over and want all members back to lobby, use command {a}over ", inline=True)
+  embed.add_field(name="EXAMPLE", value=f"If your game is over and want all members back to lobby, use command `{a}over` ", inline=True)
 
-  embed.add_field(name="Special Access..!", value="if you have role 'M3W2', you can delete the created team channel in that category and return to any voice channel in that particular category..!\n", inline=False)
-
-  embed.add_field(name="press ⏮ for page 1", value=f"Information about all commands", inline=True)
-
-  embed.add_field(name="press ◀ for page 2", value=f"Information about {a}vteam command", inline=True)
+  embed.add_field(name="Special Access..!", value="if you have role `M3W2`, you can delete the created team channel in that category and return to any voice channel in that particular category..!\n", inline=False)
 
 
-  embed.set_footer(text="\nThanks for using my Bot <3 \n Page-3/3")
+  embed.set_footer(text=f"\n⏮️ {a}help || {a}vteam ◀️ \n Page-3/3")
 
   return embed
 
