@@ -305,7 +305,7 @@ def embedpg2(ctx):
 
   embed.add_field(name="EXAMPLE", value=f"If you want two team, syntax is `{a}vteam 2` ", inline=True)
 
-  embed.add_field(name="INSTRUCTIONS", value=f"1. Create M3W2 Category and channel, enter command `{a}vteam 1` \n2. If this command doesn't summon M3W2 Lobby channel, delete the category and retype the command.\n3. please delete M3W2 Team - x channel if not needed by `{a}over` command. if the M3W2 Team - x channel exist, delete manually. \n4. Enter number of teams less than or equal to number of members in the M3W2 Lobby channel. \n5. You and all members must be in M3W2 Lobby channel to summon and seperate teams\n", inline=False)
+  embed.add_field(name="INSTRUCTIONS", value=f"1. To create M3W2 Category and channel by bot, enter command `{a}vteam 1` \n2. If this command doesn't summon M3W2 Lobby channel, delete the category and retype the command.\n3. please delete M3W2 Team - x channel if not needed by `{a}over` command. if the M3W2 Team - x channel exist, delete manually. \n4. Enter number of teams less than or equal to number of members in the M3W2 Lobby channel. \n5. You and all members must be in M3W2 Lobby channel to summon and seperate teams\n", inline=False)
 
   embed.add_field(name="Privilaged M3W2", value=f"If you want to form team other than M3W2 Teams category or M3W2 Lobby, create a role `M3W2` and assign it to you..!\n This role helps you to form teams from other voice channels and has special {a}over command access to delete the created teams channel\n", inline=False)
 
