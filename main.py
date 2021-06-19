@@ -65,6 +65,11 @@ async def on_ready():
 async def change_status():
     await client.change_presence(activity=discord.Game(next(status)))
 
+#For ping
+@client.command()
+async def ping(ctx):
+    await ctx.send(f'{round(client.latency*1000)} ms')
+
 
 #Change Prefix
 @client.command()
@@ -87,7 +92,7 @@ async def link(ctx):
 
 #Voice team maker
 @client.command()
-async def vteam(ctx, notm):
+async def vteam(ctx, notm, con=None):
 
     ch = ctx.author.voice
     if ch == None:
@@ -154,6 +159,9 @@ async def vteam(ctx, notm):
         memid = voice_channel.voice_states.keys()
 
     memlist = list(memid)
+    if con == 'mod':
+      memlist.remove(a)
+
 
     if a not in memlist and not isadmin:
         await ctx.send(
@@ -216,7 +224,7 @@ async def over(ctx):
         return
 
     if autca != voice_main.category:
-        await ctx.send('You\'re not in M3W2 Teams category..!')
+        await ctx.send('You\'re not in M3W2 Teams category or you don\'t have M3W2 Role..!')
         return
 
     if voice_main == None:
@@ -250,13 +258,6 @@ async def on_command_error(ctx, error):
         message = "Oh no! Something went wrong while running the command!"
     await ctx.send(message, delete_after=5)
     await ctx.message.delete(delay=5)
-
-
-
-
-#For ping
-@client.command()
-async def ping(ctx):
     await ctx.send(f'{round(client.latency*1000)} ms')
 
 
@@ -427,6 +428,7 @@ async def embedpages(ctx):
             break
 
     await message.clear_reactions()
+
 
 
 keep_alive()
