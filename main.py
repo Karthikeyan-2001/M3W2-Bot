@@ -74,20 +74,27 @@ async def ping(ctx):
 #Change Prefix
 @client.command()
 async def changeprefix(ctx, prefix):
-    with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
+  if len(prefix)>6:
+    await ctx.send(f'Prefix Toooo Long..!!!')
+    return
+  if prefix == '':
+    await ctx.send(f'Null prefix not accepted xD..!')
+    return
 
-    prefixes[str(ctx.guild.id)] = prefix
+  with open('prefixes.json', 'r') as f:
+      prefixes = json.load(f)
 
-    with open('prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent=4)
+  prefixes[str(ctx.guild.id)] = prefix
 
-    await ctx.send(f'prefix changed to {prefix}')
+  with open('prefixes.json', 'w') as f:
+      json.dump(prefixes, f, indent=4)
+
+  await ctx.send(f'prefix changed to {prefix}')
 
 
 @client.command()
 async def link(ctx):
-    await ctx.send('https://bit.ly/3wyHJ11')
+    await ctx.send('https://discord.com/api/oauth2/authorize?client_id=847731191461052416&permissions=16788496&scope=bot')
 
 
 #Voice team maker
@@ -258,7 +265,6 @@ async def on_command_error(ctx, error):
         message = "Oh no! Something went wrong while running the command!"
     await ctx.send(message, delete_after=5)
     await ctx.message.delete(delay=5)
-    await ctx.send(f'{round(client.latency*1000)} ms')
 
 
 def embedpg1(ctx):
