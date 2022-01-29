@@ -2,6 +2,7 @@ games=['Doom Eternal', 'Destiny 2', 'Call of Duty: Warzone', 'Half-Life: Alyx', 
 ]
 
 
+
 gifs2=['https://i.gifer.com/L9sl.gif', 
 'https://thumbs.gfycat.com/FairEnormousAfricanbushviper-size_restricted.gif',
 'https://thumbs.gfycat.com/CandidWholeAtlanticsharpnosepuffer-size_restricted.gif',
